@@ -2,21 +2,21 @@ package model.structures;
 
 public class ABBTree<K extends Comparable<K>, T> {
 	
-	protected ABBnode<K, T> root;
+	protected ABBNode<K, T> root;
 	
 	public ABBTree() {
 		this.root = null;
 	}
 	
-	public ABBnode<K, T> getRoot(){
+	public ABBNode<K, T> getRoot(){
 		return root;
 	}
 	
-	public ABBnode<K, T> search(K key) {
+	public ABBNode<K, T> search(K key) {
 		return search(key, root);
 	}
 	
-	private ABBnode<K, T> search(K key, ABBnode<K, T> node){
+	private ABBNode<K, T> search(K key, ABBNode<K, T> node){
 		if(node!=null) {
 			
 			int compa = key.compareTo(node.getKey()); 
@@ -38,13 +38,13 @@ public class ABBTree<K extends Comparable<K>, T> {
 		
 	}
 	
-	public ABBnode<K, T> add(K key, T data) {
-		ABBnode<K, T> node = new ABBnode<>(key, data);
+	public ABBNode<K, T> add(K key, T data) {
+		ABBNode<K, T> node = new ABBNode<>(key, data);
 		
 		return add(root, node);
 	}
 	
-	protected ABBnode<K, T> add(ABBnode<K, T> parent, ABBnode<K, T> child) {
+	protected ABBNode<K, T> add(ABBNode<K, T> parent, ABBNode<K, T> child) {
 		if(root == null) {
 			root = child;
 			return child;
@@ -72,8 +72,8 @@ public class ABBTree<K extends Comparable<K>, T> {
 	}
 	
 
-	public ABBnode<K, T> delete(K key){
-		ABBnode<K, T> node = search(key);
+	public ABBNode<K, T> delete(K key){
+		ABBNode<K, T> node = search(key);
 		if(node != null) {
 			return delete(node);
 		}
@@ -82,9 +82,9 @@ public class ABBTree<K extends Comparable<K>, T> {
 		}
 	}
 	
-	private ABBnode<K, T> delete(ABBnode<K, T> z){
-		ABBnode<K, T> y;
-		ABBnode<K, T> x;
+	private ABBNode<K, T> delete(ABBNode<K, T> z){
+		ABBNode<K, T> y;
+		ABBNode<K, T> x;
 		if(z.getLeft() == null || z.getRight() == null) {
 			y = z;
 		}
@@ -120,7 +120,7 @@ public class ABBTree<K extends Comparable<K>, T> {
 	
 
 	
-	public ABBnode<K, T> min(ABBnode<K, T> node){
+	public ABBNode<K, T> min(ABBNode<K, T> node){
 		while(node.getLeft() != null) {
 			node = node.getLeft();
 			
@@ -128,19 +128,19 @@ public class ABBTree<K extends Comparable<K>, T> {
 		return node;
 	}
 	
-	public ABBnode<K, T> max(ABBnode<K, T> node){
+	public ABBNode<K, T> max(ABBNode<K, T> node){
 		while(node.getRight() != null) {
 			node = node.getRight();
 		}
 		return node;
 	}
 	
-	public ABBnode<K, T> successor(ABBnode<K, T> x){
+	public ABBNode<K, T> successor(ABBNode<K, T> x){
 		if(x.getRight() != null) {
 			return min(x.getRight());
 			
 		}
-		ABBnode<K, T> y = x.getParent();
+		ABBNode<K, T> y = x.getParent();
 		while(y != null && x.equals(y.getRight()) ) {
 			x = y;
 			y = y.getParent();
@@ -148,11 +148,11 @@ public class ABBTree<K extends Comparable<K>, T> {
 		return y;
 	}
 	
-	public ABBnode<K, T> predeccessor(ABBnode<K, T> x){
+	public ABBNode<K, T> predeccessor(ABBNode<K, T> x){
 		if(x.getLeft() != null) {
 			return max(x.getLeft());
 		}
-		ABBnode<K, T> y = x.getParent();
+		ABBNode<K, T> y = x.getParent();
 		while(y != null && x == y.getLeft()) {
 			x = y;
 			y = y.getParent();
@@ -164,7 +164,7 @@ public class ABBTree<K extends Comparable<K>, T> {
 		return toString(root, "", true);
 	}
 	
-	private String toString(ABBnode<K, T> node, String indent, boolean last){
+	private String toString(ABBNode<K, T> node, String indent, boolean last){
 		String treeString = "";
 	    treeString = indent + "+- " + node +"\n";
 	    indent += last ? "   " : "|  ";
