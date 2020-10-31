@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Trie<E> {
 	
-	public TrieNode<E> root;
+	private TrieNode<E> root;
 	 
     public Trie() {
         root = new TrieNode<E>();
@@ -15,25 +15,24 @@ public class Trie<E> {
     public boolean add(String word, E data) {
         return add(word, root, data);
     }
-    private boolean add(String string, TrieNode<E> parent, E data) {
-    	if(string == null)
-    		return false;
-    	
-    	HashMap<Character, TrieNode<E>> children = parent.getChildren();
+    private boolean add(String string, TrieNode<E> node, E data) {
+    	HashMap<Character, TrieNode<E>> children = node.getChildren();
     	char key = string.charAt(0);
     	String substring = (string.length() > 1) ? string.substring(1) : null;
     	
     	if(children.containsKey(key)){
-        	return add(substring, children.get(key), data);
+    		if(substring == null) {
+    			return node.getChildren().get(key).attachData(data);
+        	}else {
+        		return add(substring, children.get(key), data);
+        	}
         	
         }else{
         	
-        	TrieNode<E> child = new TrieNode<E>(parent, key);
-        	parent.getChildren().put(key, child);
-        	
+        	TrieNode<E> child = new TrieNode<E>(node, key);
+        	node.getChildren().put(key, child);
         	if(substring == null) {
-        		child.attachData(data);
-        		return true;
+        		return child.attachData(data);
         	}else {
         		return add(substring, child, data);
         	}
@@ -59,21 +58,21 @@ public class Trie<E> {
     
     public TrieNode<E> getNode(String string){
     	HashMap<Character, TrieNode<E>> children = root.getChildren(); 
-    	
         TrieNode<E> aux = null;
-        
+        boolean longerThanMaxStored = false;
         for(int i = 0; i < string.length(); i++){
+        	
             char key = string.charAt(i);
-            
+
             if(children.containsKey(key)){
                 aux = children.get(key);
                 children = aux.getChildren();
             }else{
+            	longerThanMaxStored = true;
                 break;
             }
         }
- 
-        return aux;
+        return (longerThanMaxStored) ? null : aux;
     }
     
     public List<TextSuggestion<E>> getSuggestions(String prefix){
@@ -81,6 +80,12 @@ public class Trie<E> {
     }
     
     public int countSuggestions(String prefix){
-    	return getNode(prefix).countSuggestions(prefix);
+    	TrieNode<E> aux = getNode(prefix);
+    	return (aux != null) ? aux.countSuggestions(prefix) : 0;
+    }
+    
+    //for test
+    public TrieNode<E> getRoot(){
+    	return this.root;
     }
 }

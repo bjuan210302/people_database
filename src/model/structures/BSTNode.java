@@ -1,14 +1,14 @@
 package model.structures;
 
-public class ABBNode<K extends Comparable<K>,T> {
+public class BSTNode<K extends Comparable<K>,T> {
 	
 	private K key;
 	private T data;
-	private ABBNode<K, T> parent;
-	private ABBNode<K, T> left;
-	private ABBNode<K, T> right;
+	private BSTNode<K, T> parent;
+	private BSTNode<K, T> left;
+	private BSTNode<K, T> right;
 	
-	public ABBNode(K key, T data) {
+	public BSTNode(K key, T data) {
 		this.key = key;
 		this.data = data;
 	}
@@ -29,27 +29,27 @@ public class ABBNode<K extends Comparable<K>,T> {
 		this.data = data;
 	}
 
-	public ABBNode<K, T> getParent() {
+	public BSTNode<K, T> getParent() {
 		return parent;
 	}
 
-	public void setParent(ABBNode<K, T> parent) {
+	public void setParent(BSTNode<K, T> parent) {
 		this.parent = parent;
 	}
 
-	public ABBNode<K, T> getLeft() {
+	public BSTNode<K, T> getLeft() {
 		return left;
 	}
 
-	public void setLeft(ABBNode<K, T> left) {
+	public void setLeft(BSTNode<K, T> left) {
 		this.left = left;
 	}
 
-	public ABBNode<K, T> getRight() {
+	public BSTNode<K, T> getRight() {
 		return right;
 	}
 
-	public void setRight(ABBNode<K, T> right) {
+	public void setRight(BSTNode<K, T> right) {
 		this.right = right;
 	}
 	
