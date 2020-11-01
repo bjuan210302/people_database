@@ -15,6 +15,7 @@
             <items>
               <MenuItem fx:id="generateDataBut" mnemonicParsing="false" onAction="#generateDataButton" text="Generate data" />
                   <MenuItem fx:id="addPersonBut" mnemonicParsing="false" onAction="#addPersonAct" text="Add person" />
+                  <MenuItem fx:id="searchBut" mnemonicParsing="false" onAction="#searchAct" text="Search" />
             </items>
           </Menu>
         </menus>

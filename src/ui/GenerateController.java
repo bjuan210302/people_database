@@ -23,5 +23,6 @@ public class GenerateController {
     void generateAct(ActionEvent event) {
 
     }
-
+    
+    
 }

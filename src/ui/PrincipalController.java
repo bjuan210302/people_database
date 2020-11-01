@@ -14,12 +14,17 @@ public class PrincipalController {
 	
 	private AddPersonController addControl;
 	
+	private SearchController searchControl;
+	
 	@FXML
     private MenuItem generateDataBut;
 	
 
     @FXML
     private MenuItem addPersonBut;
+    
+    @FXML
+    private MenuItem searchBut;
 	
     @FXML
     private Pane paneChange;
@@ -29,6 +34,9 @@ public class PrincipalController {
    
    @FXML
    private Pane secondPane;
+   
+   @FXML
+   private Pane thirdPane;
 
     @FXML
     public void generateDataButton(ActionEvent event) {
@@ -44,11 +52,19 @@ public class PrincipalController {
     	paneChange.getChildren().add(secondPane);
 
     }
+    
+    @FXML
+    void searchAct(ActionEvent event) {
+    	paneChange.getChildren().clear();
+    	paneChange.getChildren().add(thirdPane);
+
+    }
 	
 	
 	public void whenInitializing() {
 		genControl = new GenerateController();
 		addControl = new AddPersonController();
+		searchControl = new SearchController();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatePane.fxml"));
 		fxmlLoader.setController(genControl);
@@ -67,6 +83,17 @@ public class PrincipalController {
 		try {
 		
 			secondPane = fxmlLoader.load();
+			
+		} catch (IOException e) {
+			
+		}
+		
+		fxmlLoader = new FXMLLoader(getClass().getResource("searchPane.fxml"));
+		fxmlLoader.setController(searchControl);
+		
+		try {
+		
+			thirdPane = fxmlLoader.load();
 			
 		} catch (IOException e) {
 			
