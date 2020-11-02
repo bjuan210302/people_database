@@ -46,28 +46,20 @@ public class Database {
 		if (tempList == null)
 			return false;
 		
-		long trietime = 0;
-		long avltime = 0;
-		long initial = 0;
 		for(Person p: tempList) {
-			initial = System.currentTimeMillis();
-			peoplePerName.add(p.getCompoundName(), p);
-			peoplePerSurname.add(p.getInvertedCompoundName(), p);
-			peoplePerCode.add(p.getCode(), p);
-			avltime += System.currentTimeMillis() - initial;
+//			peoplePerName.add(p.getCompoundName().toLowerCase(), p);
+//			peoplePerSurname.add(p.getInvertedCompoundName().toLowerCase(), p);
+//			peoplePerCode.add(p.getCode(), p);
 			
-			initial = System.currentTimeMillis();
-//			nameSuggestions.add(p.getCompoundName(), p);
-//			surnameSuggestions.add(p.getInvertedCompoundName(), p);
-			trietime += System.currentTimeMillis() - initial;
+			nameSuggestions.add(p.getCompoundName().toLowerCase());
+			surnameSuggestions.add(p.getInvertedCompoundName().toLowerCase());
+			System.out.println(p.getInvertedCompoundName().toLowerCase());
 		}
-		
-		System.out.println("avltime: " + avltime);
-		System.out.println("trietime: " + trietime);
 		return true;
 	}
 	//TEXT SUGGESTIONS
 	public List<String> getNameSuggestions(String prefix){
+		prefix = prefix.toLowerCase();
 		return nameSuggestions.getSuggestions(prefix);
 	}
 	public List<String> getSurnameSuggestions(String prefix){
