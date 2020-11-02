@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Windows">
+            <items>
+              <MenuItem fx:id="generateDataBut" mnemonicParsing="false" onAction="#generateDataButton" text="Generate data" />
+                  <MenuItem fx:id="addPersonBut" mnemonicParsing="false" onAction="#addPersonAct" text="Add person" />
+                  <MenuItem fx:id="searchBut" mnemonicParsing="false" onAction="#searchAct" text="Search" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <Pane fx:id="paneChange" prefHeight="667.0" prefWidth="900.0" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>
