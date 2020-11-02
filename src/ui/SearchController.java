@@ -5,8 +5,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.fxml.FXML;
+import model.Database;
 
 public class SearchController {
+	Database db;
+	
+	public SearchController(Database db) {
+		this.db = db;
+	}
 	
 
     @FXML
@@ -15,22 +21,59 @@ public class SearchController {
     @FXML
     private JFXButton editButton;
     
+    @FXML
+    private JFXTextField surNameField;
+    
     public void initialize() {
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
-        autoCompletePopup.getSuggestions().addAll("Sebastian", "Bjuan", "...");
+        JFXAutoCompletePopup<String> autoCompleteSurname = new JFXAutoCompletePopup<>();
+//        autoCompletePopup.getSuggestions().addAll(db.getNameSuggestions(event.getObject()));
+//    	autoCompletePopup.filter(string -> string.toLowerCase().contains(searchField.getText().toLowerCase()));
 
         autoCompletePopup.setSelectionHandler(event -> {
             searchField.setText(event.getObject());
+           
+        });
+        
+        autoCompleteSurname.setSelectionHandler(event -> {
+        	surNameField.setText(event.getObject());
+        });
+        
+        surNameField.textProperty().addListener(observable -> {
 
+
+        	if ( surNameField.getText().isEmpty()) {
+        		autoCompleteSurname.hide();
+        	} else {
+        		//            	System.out.println(db.getNameSuggestions(searchField.getText()));
+        		try {
+        			autoCompleteSurname.getSuggestions().clear();
+        			autoCompleteSurname.getSuggestions().addAll(db.getSurnameSuggestions(surNameField.getText()));
+        			autoCompleteSurname.show(surNameField);
+        		}
+        		catch(NullPointerException e) {
+        			autoCompleteSurname.hide();
+        			System.out.println("error");
+        		}
+        	}
         });
 
         
         searchField.textProperty().addListener(observable -> {
-            autoCompletePopup.filter(string -> string.toLowerCase().contains(searchField.getText().toLowerCase()));
-            if (autoCompletePopup.getFilteredSuggestions().isEmpty() || searchField.getText().isEmpty()) {
+        	
+            
+            if ( searchField.getText().isEmpty()) {
                 autoCompletePopup.hide();
             } else {
-                autoCompletePopup.show(searchField);
+//            	System.out.println(db.getNameSuggestions(searchField.getText()));
+            	try {
+            		autoCompletePopup.getSuggestions().clear();
+            		autoCompletePopup.getSuggestions().addAll(db.getNameSuggestions(searchField.getText()));
+            		autoCompletePopup.show(searchField);
+            	}
+            	catch(NullPointerException e) {
+            		autoCompletePopup.hide();
+            	}
             }
         });
     }

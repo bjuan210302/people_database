@@ -1,18 +1,24 @@
 package ui;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.Database;
 
 public class Main extends Application{
 
 	PrincipalController principalController;
+	Database dataBase;
 
-	public Main() {
-		principalController = new PrincipalController();
+	public Main() throws IOException {
+		dataBase = new Database();
+		principalController = new PrincipalController(dataBase);
+		
 	}
 
 	public static void main(String[] args) {

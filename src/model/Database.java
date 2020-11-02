@@ -50,20 +50,20 @@ public class Database {
 		long avltime = 0;
 		long initial = 0;
 		for(Person p: tempList) {
-			initial = System.currentTimeMillis();
-			peoplePerName.add(p.getCompoundName(), p);
-			peoplePerSurname.add(p.getInvertedCompoundName(), p);
-			peoplePerCode.add(p.getCode(), p);
-			avltime += System.currentTimeMillis() - initial;
+//			initial = System.currentTimeMillis();
+//			peoplePerName.add(p.getCompoundName(), p);
+//			peoplePerSurname.add(p.getInvertedCompoundName(), p);
+//			peoplePerCode.add(p.getCode(), p);
+//			avltime += System.currentTimeMillis() - initial;
 			
-			initial = System.currentTimeMillis();
-//			nameSuggestions.add(p.getCompoundName(), p);
-//			surnameSuggestions.add(p.getInvertedCompoundName(), p);
-			trietime += System.currentTimeMillis() - initial;
+//			initial = System.currentTimeMillis();
+			nameSuggestions.add(p.getCompoundName().toLowerCase());
+			surnameSuggestions.add(p.getInvertedCompoundName().toLowerCase());
+//			trietime += System.currentTimeMillis() - initial;
 		}
 		
-		System.out.println("avltime: " + avltime);
-		System.out.println("trietime: " + trietime);
+//		System.out.println("avltime: " + avltime);
+//		System.out.println("trietime: " + trietime);
 		return true;
 	}
 	//TEXT SUGGESTIONS

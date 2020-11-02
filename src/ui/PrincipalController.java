@@ -7,8 +7,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
+import model.Database;
 
 public class PrincipalController {
+	
+	private Database db;
+	
+	public PrincipalController(Database db) {
+		this.db = db;
+	}
 	
 	private GenerateController genControl;
 	
@@ -62,9 +69,9 @@ public class PrincipalController {
 	
 	
 	public void whenInitializing() {
-		genControl = new GenerateController();
+		genControl = new GenerateController(this.db);
 		addControl = new AddPersonController();
-		searchControl = new SearchController();
+		searchControl = new SearchController(this.db);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatePane.fxml"));
 		fxmlLoader.setController(genControl);
