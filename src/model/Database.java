@@ -46,7 +46,7 @@ public class Database {
 		if (tempList == null)
 			return false;
 		
-		for(Person p: tempLi
+		for(Person p: tempList) {
 //			peoplePerName.add(p.getCompoundName().toLowerCase(), p);
 //			peoplePerSurname.add(p.getInvertedCompoundName().toLowerCase(), p);
 //			peoplePerCode.add(p.getCode(), p);
