@@ -9,8 +9,6 @@ import java.util.Random;
 import java.nio.file.*;
 
 import model.Person;
-import model.structures.Trie;
-import model.structures.TrieNode;
 
 public class PeopleGenerator {
 	
@@ -43,7 +41,7 @@ public class PeopleGenerator {
 		
 		
 		for(int i = 0; i < amount; i++) {
-			String[] compoundName = generateNonExsitingName(existingNamesInDB, generatedNames);
+			String[] compoundName = generateNonExistingName(existingNamesInDB, generatedNames);
 			Person person = new Person(
 					ID_GENERATOR.nextLong(), compoundName[0], compoundName[1],
 					ageGenerator.generateRandom(), countryGenerator.generateRandom());
@@ -53,7 +51,7 @@ public class PeopleGenerator {
 		return list;
 	}
 	
-	private String[] generateNonExsitingName(HashMap<String, Integer> existingNamesInDB, HashMap<String, Integer> namesMap) {
+	private String[] generateNonExistingName(HashMap<String, Integer> existingNamesInDB, HashMap<String, Integer> namesMap) {
 		String name = "";
 		String surname = "";
 		String compoundName = "";
