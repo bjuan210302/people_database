@@ -4,8 +4,10 @@ import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Database;
+import ui.edit.EditController;
 
 public class SearchController {
 	Database db;
@@ -23,6 +25,13 @@ public class SearchController {
     
     @FXML
     private JFXTextField surNameField;
+    
+    @FXML
+    void editAct(ActionEvent event) {
+    	EditController edit = new EditController();
+    	edit.editWindow();
+
+    }
     
     public void initialize() {
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
@@ -53,7 +62,6 @@ public class SearchController {
         		}
         		catch(NullPointerException e) {
         			autoCompleteSurname.hide();
-        			System.out.println("error");
         		}
         	}
         });
