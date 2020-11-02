@@ -7,6 +7,9 @@ public abstract class Generator<T extends Generable> {
 
 	protected ArrayList<T> entries;
 	
+	public Generator() {
+		entries = new ArrayList<T>();
+	}
 	protected void sortEntries() {
 		entries.sort(new Comparator<T>() {
 			@Override

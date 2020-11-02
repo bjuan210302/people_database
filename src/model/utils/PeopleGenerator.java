@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.nio.file.*;
 
@@ -26,61 +27,65 @@ public class PeopleGenerator {
 	private AgeGenerator ageGenerator;
 	private CountryGenerator countryGenerator;
 	
-	
 	public PeopleGenerator() throws IOException {
-		initializeArray(NAMES_PATH, names);
-		initializeArray(SURNAMES_PATH, surnames);
+		names = initializeArray(NAMES_PATH);
+		surnames = initializeArray(SURNAMES_PATH);
 		countryGenerator = new CountryGenerator(POPULATION_DISTRIBUTION_PATH);
 		ageGenerator = new AgeGenerator(POPULATION_AGE_PATH);
+		
+		namesSize = names.size();
+		surnamesSize = surnames.size();
 	}
 	
-	public ArrayList<Person> generate(int amount, Trie<Person> trie) throws MalformedURLException, IOException{
+	public ArrayList<Person> generateList(int amount, HashMap<String, Integer> existingNamesInDB) throws MalformedURLException, IOException{
+		HashMap<String, Integer> generatedNames = new HashMap<String, Integer>();
 		ArrayList<Person> list = new ArrayList<Person>();
-		String[] compoundName = generateName(trie);
+		
 		
 		for(int i = 0; i < amount; i++) {
+			String[] compoundName = generateNonExsitingName(existingNamesInDB, generatedNames);
 			Person person = new Person(
 					ID_GENERATOR.nextLong(), compoundName[0], compoundName[1],
 					ageGenerator.generateRandom(), countryGenerator.generateRandom());
 			
 			list.add(person);
 		}
-		
 		return list;
 	}
 	
-	private String[] generateName(Trie<Person> trie) {
+	private String[] generateNonExsitingName(HashMap<String, Integer> existingNamesInDB, HashMap<String, Integer> namesMap) {
 		String name = "";
 		String surname = "";
 		String compoundName = "";
 		boolean compNameExist = false;
-		TrieNode<Person> result = null;
-		
+
 		do {
 			//Generating name
 			name = names.get(new Random().nextInt(namesSize));
 			surname = surnames.get(new Random().nextInt(surnamesSize));
 			compoundName = name + " " + surname;
-			
 			//Checking if it already exist
-			result = trie.getNode(compoundName);
-			
-			compNameExist = (result != null && result.hasData());
+
+			compNameExist = existingNamesInDB.containsKey(compoundName);
 		}while(compNameExist);
-		
+
+		namesMap.put(compoundName, 0); //The Integer value doesn't really matter, the map is just for fast-search names
 		return new String[] {name, surname};
 	}
-	private void initializeArray(String path, ArrayList<String> list) throws IOException {
-		list = new ArrayList<String>();
+	private ArrayList<String> initializeArray(String path) throws IOException {
+		ArrayList<String> list = new ArrayList<String>();
 		BufferedReader br = Files.newBufferedReader(Paths.get(path));
-		
+
 		String line = br.readLine();
-		
+		String item = null;
 		while(line != null) {
-			list.add(line);
+			item = line.split(",")[0];
+			list.add(item);
 			line = br.readLine();
 		}
-		
+
 		br.close();
+
+		return list;
 	}
 }

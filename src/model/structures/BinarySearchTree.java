@@ -65,6 +65,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			return add(parent.getLeft(), child);
 		}
 		else {
+			System.out.println("non accepted");
 			return null;
 		}
 		
@@ -136,4 +137,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		return y;
 	}
 
+	public int count() {
+		return (root != null) ? root.count() : 0;
+	}
 }

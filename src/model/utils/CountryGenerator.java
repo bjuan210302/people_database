@@ -8,14 +8,14 @@ import java.nio.file.Paths;
 public class CountryGenerator extends Generator<Country>{
 
 	public CountryGenerator(String path) throws IOException {
-		
+		super();
 		BufferedReader br = Files.newBufferedReader(Paths.get(path));
 		
 		String line = br.readLine();
 		
 		while(line != null) {
 			String[] args = line.split(",");
-			Country country = new Country(args[0], Double.parseDouble(args[2]));
+			Country country = new Country(args[0], Double.parseDouble(args[1]));
 			entries.add(country);
 			line = br.readLine();
 		}

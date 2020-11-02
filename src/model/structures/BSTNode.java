@@ -53,14 +53,6 @@ public class BSTNode<K extends Comparable<K>,T> {
 		this.right = right;
 	}
 	
-	public boolean isEmpty() {
-		return false;
-	}
-	
-	public boolean isLeaf() {
-		return (left.isEmpty() && right.isEmpty());
-	}
-	
 	public int getBalanceFactor() {
 		int bfRight = (right == null) ? 0 : right.getHeight();
 		int bfLeft = (left == null) ? 0 : left.getHeight();
@@ -75,6 +67,18 @@ public class BSTNode<K extends Comparable<K>,T> {
 	
 	public String toString() {
 		return   "(" + getKey().toString() + ")";
+	}
+
+	public int count() {
+		int sum = 1;
+		
+		if(left != null)
+			sum += left.count();
+		
+		if(right != null)
+			sum += right.count();
+		
+		return sum;
 	}
 	
 

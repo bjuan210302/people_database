@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 public class AgeGenerator extends Generator<Range>{
 	
 	public AgeGenerator(String path) throws IOException {
-		
+		super();
 		BufferedReader br = Files.newBufferedReader(Paths.get(path));
 		
 		String line = br.readLine();
