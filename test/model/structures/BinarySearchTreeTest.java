@@ -70,4 +70,12 @@ class BinarySearchTreeTest {
 		assertEquals(null, bst.delete(id)); //Can't delete it again
 	}
 	
+	@Test
+	void countTest() {
+		setupEmpty();
+		assertEquals(0, bst.count());
+		
+		setupPopulatedTree(); //Populated with 7 nodes
+		assertEquals(7, bst.count());
+	}
 }
