@@ -3,23 +3,23 @@ package model.structures;
 public class AVLTree<K extends Comparable<K>, T> extends BinarySearchTree<K, T>{
 	
 	@Override
-	public BSTNode<K, T> add(K key, T data) {
-		BSTNode<K, T> ref = super.add(key, data);
+	public TreeNode<K, T> add(K key, T data) {
+		TreeNode<K, T> ref = super.add(key, data);
 		if(ref != null)
 			balance(ref.getParent());
 		return ref;
 	}
 	
 	@Override
-	public BSTNode<K, T> delete(K key) {
-		BSTNode<K, T> ref = super.delete(key);
+	public TreeNode<K, T> delete(K key) {
+		TreeNode<K, T> ref = super.delete(key);
 		if(ref != null)
 			balance(ref.getParent());
 		return ref;
 	}
 	
 	//Doesn't admit node = null
-	private void balance(BSTNode<K, T> parent) {
+	private void balance(TreeNode<K, T> parent) {
 
 		while(parent != null) {
 
@@ -46,10 +46,10 @@ public class AVLTree<K extends Comparable<K>, T> extends BinarySearchTree<K, T>{
 		}
 	}
 	
-	private void leftRotate(BSTNode<K, T> node) {
+	private void leftRotate(TreeNode<K, T> node) {
 		
-		BSTNode<K, T> rNode = node.getRight();
-		BSTNode<K, T> grandpa = node.getParent();
+		TreeNode<K, T> rNode = node.getRight();
+		TreeNode<K, T> grandpa = node.getParent();
 		
 		if(grandpa == null) {
 			root = rNode;
@@ -73,9 +73,9 @@ public class AVLTree<K extends Comparable<K>, T> extends BinarySearchTree<K, T>{
 		node.setParent(rNode);
 	}
 	
-	private void rightRotate(BSTNode<K, T> node) {
-		BSTNode<K, T> lNode = node.getLeft();
-		BSTNode<K, T> grandpa = node.getParent();
+	private void rightRotate(TreeNode<K, T> node) {
+		TreeNode<K, T> lNode = node.getLeft();
+		TreeNode<K, T> grandpa = node.getParent();
 		
 		if(grandpa == null) {
 			root = lNode;
