@@ -51,12 +51,12 @@
             <Font name="Cambria Math" size="21.0" />
          </font>
       </Label>
-      <JFXRadioButton fx:id="mascRbut" layoutX="213.0" layoutY="229.0" text="Masculine">
+      <JFXRadioButton fx:id="mascRbut" layoutX="213.0" layoutY="229.0" text="Male">
          <toggleGroup>
             <ToggleGroup fx:id="Genre" />
          </toggleGroup>
       </JFXRadioButton>
-      <JFXRadioButton fx:id="femRBut" layoutX="364.0" layoutY="229.0" text="Femenine" toggleGroup="$Genre" />
+      <JFXRadioButton fx:id="femRBut" layoutX="364.0" layoutY="229.0" text="Female" toggleGroup="$Genre" />
       <JFXDatePicker fx:id="birthDatePick" layoutX="213.0" layoutY="290.0" />
       <JFXTextField fx:id="heightField" layoutX="211.0" layoutY="356.0" />
       <JFXTextField fx:id="nationField" layoutX="211.0" layoutY="422.0" />
