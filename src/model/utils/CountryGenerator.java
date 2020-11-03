@@ -14,19 +14,20 @@ public class CountryGenerator extends Generator<Country>{
 		String line = br.readLine();
 		
 		while(line != null) {
-			String[] args = line.split(",");
-			Country country = new Country(args[0], Double.parseDouble(args[1]));
-			entries.add(country);
+			if (!line.startsWith("#")){
+				String[] args = line.split(",");
+				Country country = new Country(args[0], Double.parseDouble(args[2]));
+				entries.add(country);
+			}
 			line = br.readLine();
 		}
 		
 		br.close();
 		
-		sortEntries();
 	}
 	
 	public String generateRandom() {
-		double x = Math.random();
+		double x = Math.random()*100;
 		String name = null;
 		for(Country country: entries) {
 			if(x < country.getProb()) {
@@ -35,6 +36,6 @@ public class CountryGenerator extends Generator<Country>{
 			}
 		}
 		
-		return (name != null) ? name : generateRandom();
+		return name;
 	}
 }

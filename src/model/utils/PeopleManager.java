@@ -18,7 +18,7 @@ import threads.GeneratePeopleThread;
 
 public class PeopleManager {
 	
-	public Random ID_GENERATOR = new Random();
+	private Random idGenerator = new Random();
 	public static final String NAMES_PATH = "data/csv/names.csv";
 	public static final String SURNAMES_PATH = "data/csv/surnames.csv";
 	public static final String POPULATION_DISTRIBUTION_PATH = "data/csv/american_countries_dist.csv";
@@ -54,12 +54,7 @@ public class PeopleManager {
 			@Override
 			public void accept(Integer i) {
 				Person p = tempList.get(i);
-				db.getPeoplePerName().add(p.getCompoundName().toLowerCase(), p);
-				db.getPeoplePerSurname().add(p.getInvertedCompoundName().toLowerCase(), p);
-				db.getPeoplePerCode().add(p.getCode(), p);
-				
-				db.getNameSuggestions().add(p.getCompoundName().toLowerCase());
-				db.getSurnameSuggestions().add(p.getInvertedCompoundName().toLowerCase());
+				db.addPerson(p);
 			}
 		});
 		return true;
@@ -72,7 +67,7 @@ public class PeopleManager {
 			public void accept(Integer t) {
 				String[] compoundName = generateName();
 				Person person = new Person(
-						ID_GENERATOR.nextLong(), compoundName[0], compoundName[1],
+						generateRandomId(), compoundName[0], compoundName[1],
 						ageGenerator.generateRandom(), countryGenerator.generateRandom());
 				tempList.add(person);
 			}
@@ -152,6 +147,8 @@ public class PeopleManager {
 		return list;
 	}
 	
-	
+	public long generateRandomId() {
+		return this.idGenerator.nextLong();
+	}
 	
 }

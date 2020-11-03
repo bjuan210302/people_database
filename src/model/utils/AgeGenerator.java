@@ -14,19 +14,19 @@ public class AgeGenerator extends Generator<Range>{
 		String line = br.readLine();
 		
 		while(line != null) {
-			String[] args = line.split(",");
-			Range range = new Range(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Double.parseDouble(args[2]));
-			entries.add(range);
+			if(!line.startsWith("#")) {
+				String[] args = line.split(",");
+				Range range = new Range(Integer.parseInt(args[0]), Integer.parseInt(args[1]), Double.parseDouble(args[3]));
+				entries.add(range);
+			}
 			line = br.readLine();
 		}
 		
 		br.close();
-		
-		sortEntries();
 	}
 	
 	public int generateRandom() {
-		double x = Math.random();
+		double x = Math.random()*100;
 		int age = 0;
 		for(Range range: entries) {
 			if(x < range.getProb()) {

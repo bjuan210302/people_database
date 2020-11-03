@@ -32,16 +32,52 @@ public class Database {
 		peopleManager = new PeopleManager();
 	}
 	
+	//AUTO GENERATE
 	public void generateTempList(DoublePropertyBase amount) {
 		peopleManager.generateList(amount);
 	}
 	public void cleanTempList() {
 //		tempList = null;
 	}
-	
 	public boolean mergeTempList(DoublePropertyBase amount) {
 		return peopleManager.mergeTempList(this, amount);
 	}
+	
+	//ADD, DELETE, AND SEARCH PEOPLE.
+	
+		//ADD
+	public void addPerson(String name, String surname, String gender, String birthdate, double height, String nationality) {
+		Person p = new Person(peopleManager.generateRandomId(), name, surname, gender, birthdate, height, nationality);
+		addPerson(p);
+	}
+	public void addPerson(Person p) {
+		peoplePerName.add(p.getCompoundName().toLowerCase(), p);
+		peoplePerSurname.add(p.getInvertedCompoundName().toLowerCase(), p);
+		peoplePerCode.add(p.getCode(), p);
+		
+		nameSuggestions.add(p.getCompoundName().toLowerCase());
+		surnameSuggestions.add(p.getInvertedCompoundName().toLowerCase());
+	}
+		//SEARCH
+	public List<Person> searchPersonByName(String name){
+		List<TreeNode<String, Person>> list = peoplePerName.search(name);
+		if(list != null)
+			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
+		return null;
+	}
+	public List<Person> searchPersonBySurname(String surname){
+		List<TreeNode<String, Person>> list = peoplePerSurname.search(surname);
+		if(list != null)
+			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
+		return null;
+	}
+	public List<Person> searchPersonByCode(long code){
+		List<TreeNode<Long, Person>> list = peoplePerCode.search(code);
+		if(list != null)
+			return list.stream().map(TreeNode<Long, Person>::getData).collect(Collectors.toList());
+		return null;
+	}
+	
 	//TEXT SUGGESTIONS
 	public List<String> getNameSuggestions(String prefix){
 		prefix = prefix.toLowerCase();
@@ -50,31 +86,8 @@ public class Database {
 	public List<String> getSurnameSuggestions(String prefix){
 		return surnameSuggestions.getSuggestions(prefix);
 	}
-
-	public List<Person> searchPersonByName(String name){
-		List<TreeNode<String, Person>> list = peoplePerName.search(name);
-		
-		if(list != null)
-			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
-		return null;
-	}
-	public List<Person> searchPersonBySurname(String surname){
-		List<TreeNode<String, Person>> list = peoplePerSurname.search(surname);
-		
-		if(list != null)
-			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
-		return null;
-	}
-	public List<Person> searchPersonByCode(long code){
-		List<TreeNode<Long, Person>> list = peoplePerCode.search(code);
-		
-		if(list != null)
-			return list.stream().map(TreeNode<Long, Person>::getData).collect(Collectors.toList());
-		return null;
-	}
 	
-	//For tests
-	
+	//GETTERS
 	public AVLTree<String, Person> getPeoplePerName() {
 		return peoplePerName;
 	}
