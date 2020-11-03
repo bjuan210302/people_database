@@ -13,11 +13,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Person;
 
 public class EditController {
 	
-	public EditController() {
-		
+	private Person person;
+	
+	
+	
+	public EditController(Person person) {
+		this.person = person;
 	}
 	
 	@FXML
@@ -87,6 +92,13 @@ public class EditController {
     	editWindow.setScene(scene);
     	editWindow.setResizable(false);
     	editWindow.initModality(Modality.APPLICATION_MODAL);
+    	
+    	nameLbl.setText(person.getName());
+    	surnameLbl.setText(person.getSurname());
+    	genreLbl.setText(person.getGender().toString());
+    	birthLbl.setText(person.getBirthdate());
+    	heightLbl.setText(person.getHeight()+ "");
+    	nationLbl.setText(person.getNationality());
     	
     	editWindow.show();
     }

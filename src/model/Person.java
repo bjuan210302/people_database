@@ -42,6 +42,54 @@ public class Person {
 		return ImageIO.read(connection.getInputStream());
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public String getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(String birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public double getHeight() {
+		return height;
+	}
+
+	public void setHeight(double height) {
+		this.height = height;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 	public String getCompoundName() {
 		return name + " " + surname;
 	}

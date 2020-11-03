@@ -8,6 +8,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Database;
+import model.Person;
 import ui.edit.EditController;
 
 public class SearchController {
@@ -36,14 +37,15 @@ public class SearchController {
 
     @FXML
     void editNameAct(ActionEvent event) {
-    	EditController edit = new EditController();
+    	Person p = db.searchPersonByName(searchField.getText()).get(0);
+    	EditController edit = new EditController(p);
     	edit.editWindow();
     }
 
     @FXML
     void editSurnamaAct(ActionEvent event) {
-    	EditController edit = new EditController();
-    	edit.editWindow();
+//    	EditController edit = new EditController(this.db);
+//    	edit.editWindow();
     }
 
     
