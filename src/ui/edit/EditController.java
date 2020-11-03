@@ -4,11 +4,13 @@ import java.io.IOException;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -88,6 +90,8 @@ public class EditController {
 		}
     	Scene scene = new Scene(editPane);
     	
+    	
+    	
     	editWindow = new Stage();
     	editWindow.setScene(scene);
     	editWindow.setResizable(false);
@@ -100,8 +104,33 @@ public class EditController {
     	heightLbl.setText(person.getHeight()+ "");
     	nationLbl.setText(person.getNationality());
     	
+    
+    	
     	editWindow.show();
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Platform.runLater(new Runnable() {
+					
+					@Override
+					public void run() {
+						try {
+							Image img = person.getImage();
+							imgView.setImage(img);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+					}
+				});
+				
+			}
+		}).start();
     }
+    
+    
 
 
 }
