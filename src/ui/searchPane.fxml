@@ -9,7 +9,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="667.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <JFXTextField fx:id="searchField" layoutX="203.0" layoutY="90.0" prefHeight="31.0" prefWidth="213.0" />
-      <JFXButton fx:id="editButton" layoutX="467.0" layoutY="90.0" onAction="#editAct" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #d5dce8;" text="Edit" />
+      <JFXButton fx:id="editNameButton" layoutX="467.0" layoutY="90.0" onAction="#editNameAct" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #d5dce8;" text="Edit" />
       <Label layoutX="45.0" layoutY="95.0" text="Search by name:">
          <font>
             <Font name="Cambria Math" size="17.0" />
@@ -21,6 +21,6 @@
          </font>
       </Label>
       <JFXTextField fx:id="surNameField" layoutX="203.0" layoutY="241.0" prefHeight="31.0" prefWidth="213.0" />
-      <JFXButton layoutX="469.0" layoutY="241.0" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #d5dce8;" text="Edit" />
+      <JFXButton fx:id="editSurnameBut" layoutX="469.0" layoutY="241.0" onAction="#editSurnamaAct" prefHeight="31.0" prefWidth="69.0" style="-fx-background-color: #d5dce8;" text="Edit" />
    </children>
 </Pane>
