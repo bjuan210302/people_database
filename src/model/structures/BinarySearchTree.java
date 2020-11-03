@@ -65,7 +65,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			return add(parent.getLeft(), child);
 		}
 		else {
-			System.out.println("non accepted");
+//			System.out.println("non accepted");
 			return null;
 		}
 		

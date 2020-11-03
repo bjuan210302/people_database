@@ -7,6 +7,9 @@ import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
+
 class DatabaseTest {
 
 	private Database db;
@@ -22,7 +25,7 @@ class DatabaseTest {
 	@Test
 	void testGenerate() {
 		setupEmpty();
-		int amount = 20000;
+		ObservableValue<Integer> amount = new SimpleIntegerProperty(20000).asObject();
 		
 		try {
 			long time = System.currentTimeMillis();
