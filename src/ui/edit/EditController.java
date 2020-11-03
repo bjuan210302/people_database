@@ -3,15 +3,12 @@ package ui.edit;
 import java.io.IOException;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
@@ -28,39 +25,53 @@ public class EditController {
 	Stage editWindow;
 
     @FXML
-    private JFXTextField nameField;
-
-    @FXML
-    private JFXTextField surnameField;
-
-    @FXML
-    private JFXButton acceptBut;
-
-    @FXML
-    private JFXRadioButton mascRbut;
-
-    @FXML
-    private ToggleGroup Genre;
-
-    @FXML
-    private JFXRadioButton femRBut;
-
-    @FXML
-    private JFXDatePicker birthDatePick;
-
-    @FXML
-    private JFXTextField heightField;
-
-    @FXML
-    private JFXTextField nationField;
+    private JFXButton finishBut;
 
     @FXML
     private ImageView imgView;
 
     @FXML
-    void acceptAct(ActionEvent event) {
-    	editWindow.close();
+    private Label nameLbl;
+
+    @FXML
+    private Label surnameLbl;
+
+    @FXML
+    private Label genreLbl;
+
+    @FXML
+    private Label birthLbl;
+
+    @FXML
+    private Label heightLbl;
+
+    @FXML
+    private Label nationLbl;
+
+    @FXML
+    private JFXButton editBut;
+
+    @FXML
+    private JFXButton delBut;
+
+    @FXML
+    void delAct(ActionEvent event) {
+
     }
+
+    @FXML
+    void editAct(ActionEvent event) {
+    	ModifyController modify = new ModifyController();
+    	modify.modifyWindow();
+
+    }
+
+    @FXML
+    void finishAct(ActionEvent event) {
+    	editWindow.close();
+
+    }
+
     
     public void editWindow() {
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("editPane.fxml"));
@@ -77,7 +88,6 @@ public class EditController {
     	editWindow.setScene(scene);
     	editWindow.setResizable(false);
     	editWindow.initModality(Modality.APPLICATION_MODAL);
-    	editWindow.initStyle(StageStyle.UNDECORATED);
     	
     	editWindow.show();
     }
