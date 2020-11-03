@@ -7,8 +7,10 @@ import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.DoublePropertyBase;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
+import threads.GeneratePeopleThread;
 
 class DatabaseTest {
 
@@ -25,19 +27,11 @@ class DatabaseTest {
 	@Test
 	void testGenerate() {
 		setupEmpty();
-		ObservableValue<Integer> amount = new SimpleIntegerProperty(20000).asObject();
+		DoublePropertyBase amount = GeneratePeopleThread.intAsObservable(200);
 		
-		try {
-			long time = System.currentTimeMillis();
-			db.generateTempList(amount);
-			System.out.println("generate: " + (System.currentTimeMillis() - time));
-		} catch (MalformedURLException e) {
-			fail("unexpected exception: " + e.getMessage());
-		} catch (IOException e) {
-			fail("unexpected exception: " + e.getMessage());
-		}
+		db.generateTempList(amount);
 		
-		assertTrue(db.mergeTempList());
+		assertTrue(db.mergeTempList(amount));
 //		//Testing trees
 //		assertEquals(amount, db.getPeoplePerName().count());
 //		assertEquals(amount, db.getPeoplePerSurname().count());
