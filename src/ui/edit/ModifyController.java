@@ -1,6 +1,7 @@
 package ui.edit;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -16,7 +17,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import ui.notifications.Notification;
 
 public class ModifyController {
 	public ModifyController() {
@@ -66,6 +67,22 @@ public class ModifyController {
 
     @FXML
     void modifyAct(ActionEvent event) {
+    	try {
+    		String name = nameField.getText();
+    		String surname = surnameField.getText();
+    		String genre;
+    		if(Genre.getSelectedToggle().equals(mascRbut)) {
+    			genre = "Male";
+    		}else {
+    			genre = "Female";
+    		}
+    		LocalDate birthDate = birthDatePick.getValue();
+    		double height = Double.parseDouble(heightField.getText());
+    		String nationality = nationField.getText();
+    	}
+    	catch(NumberFormatException e) {
+    		new Notification("Error!", "Please write the height in the correct format", Notification.ERROR).show();
+    	}
 
     }
     

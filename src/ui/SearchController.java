@@ -4,9 +4,11 @@ import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import model.Database;
+import model.Person;
 import ui.edit.EditController;
 
 public class SearchController {
@@ -20,20 +22,43 @@ public class SearchController {
     @FXML
     private JFXTextField searchField;
 
-    @FXML
-    private JFXButton editButton;
+    
     
     @FXML
     private JFXTextField surNameField;
     
     @FXML
-    void editAct(ActionEvent event) {
-    	EditController edit = new EditController();
-    	edit.editWindow();
+    private JFXButton editNameButton;
 
+    
+
+    @FXML
+    private JFXButton editSurnameBut;
+
+    @FXML
+    void editNameAct(ActionEvent event) {
+    	Person p = db.searchPersonByName(searchField.getText()).get(0);
+    	EditController edit = new EditController(p);
+    	edit.editWindow();
     }
+
+    @FXML
+    void editSurnamaAct(ActionEvent event) {
+//    	EditController edit = new EditController(this.db);
+//    	edit.editWindow();
+    }
+
+    
+    
     
     public void initialize() {
+    	
+    	BooleanBinding editNameBool = searchField.textProperty().isEmpty();
+    	BooleanBinding editSurnameBool = surNameField.textProperty().isEmpty();
+    	
+    	editNameButton.disableProperty().bind(editNameBool);
+    	editSurnameBut.disableProperty().bind(editSurnameBool);
+    	
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
         JFXAutoCompletePopup<String> autoCompleteSurname = new JFXAutoCompletePopup<>();
 //        autoCompletePopup.getSuggestions().addAll(db.getNameSuggestions(event.getObject()));
@@ -54,7 +79,6 @@ public class SearchController {
         	if ( surNameField.getText().isEmpty()) {
         		autoCompleteSurname.hide();
         	} else {
-        		//            	System.out.println(db.getNameSuggestions(searchField.getText()));
         		try {
         			autoCompleteSurname.getSuggestions().clear();
         			autoCompleteSurname.getSuggestions().addAll(db.getSurnameSuggestions(surNameField.getText()));
@@ -73,7 +97,6 @@ public class SearchController {
             if ( searchField.getText().isEmpty()) {
                 autoCompletePopup.hide();
             } else {
-//            	System.out.println(db.getNameSuggestions(searchField.getText()));
             	try {
             		autoCompletePopup.getSuggestions().clear();
             		autoCompletePopup.getSuggestions().addAll(db.getNameSuggestions(searchField.getText()));
