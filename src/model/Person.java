@@ -22,7 +22,7 @@ public class Person {
 	private double height; //In meters with two decimals
 	private String nationality;
 	
-	public Person(long code, String name, String surname, int age, String nationality) throws MalformedURLException, IOException {
+	public Person(long code, String name, String surname, int age, String nationality) {
 		this.code = code;
 		this.name = name;
 		this.surname = surname;

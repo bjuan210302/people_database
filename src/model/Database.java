@@ -2,12 +2,12 @@ package model;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.HashMap;
 import java.util.List;
 
+import javafx.beans.property.DoublePropertyBase;
 import model.structures.AVLTree;
 import model.structures.Trie;
-import model.utils.PeopleGenerator;
+import model.utils.PeopleManager;
 
 public class Database {
 
@@ -20,9 +20,7 @@ public class Database {
 	private Trie nameSuggestions; //Compound name: Name Surname
 	private Trie surnameSuggestions; //Inverted compound name: Surname name
 	
-	private PeopleGenerator peopleGenerator;
-	private HashMap<String, Integer> existingNamesInDB;
-	private List<Person> tempList;
+	private PeopleManager peopleManager;
 	
 	public Database() throws IOException {
 		peoplePerName = new AVLTree<String, Person>();
@@ -30,32 +28,18 @@ public class Database {
 		peoplePerCode = new AVLTree<Long, Person>();
 		nameSuggestions = new Trie();
 		surnameSuggestions = new Trie();
-		peopleGenerator = new PeopleGenerator();
-		
-		existingNamesInDB = new HashMap<String, Integer>();
+		peopleManager = new PeopleManager();
 	}
 	
-	public void generateTempList(int amount) throws MalformedURLException, IOException {
-		tempList = peopleGenerator.generateList(amount, existingNamesInDB);
+	public void generateTempList(DoublePropertyBase amount) {
+		peopleManager.generateList(amount);
 	}
 	public void cleanTempList() {
-		tempList = null;
+//		tempList = null;
 	}
 	
-	public boolean mergeTempList() {
-		if (tempList == null)
-			return false;
-		
-		for(Person p: tempList) {
-//			peoplePerName.add(p.getCompoundName().toLowerCase(), p);
-//			peoplePerSurname.add(p.getInvertedCompoundName().toLowerCase(), p);
-//			peoplePerCode.add(p.getCode(), p);
-			
-			nameSuggestions.add(p.getCompoundName().toLowerCase());
-			surnameSuggestions.add(p.getInvertedCompoundName().toLowerCase());
-			System.out.println(p.getInvertedCompoundName().toLowerCase());
-		}
-		return true;
+	public boolean mergeTempList(DoublePropertyBase amount) {
+		return peopleManager.mergeTempList(this, amount);
 	}
 	//TEXT SUGGESTIONS
 	public List<String> getNameSuggestions(String prefix){
