@@ -1,11 +1,12 @@
 package model;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.DoublePropertyBase;
 import model.structures.AVLTree;
+import model.structures.TreeNode;
 import model.structures.Trie;
 import model.utils.PeopleManager;
 
@@ -48,6 +49,28 @@ public class Database {
 	}
 	public List<String> getSurnameSuggestions(String prefix){
 		return surnameSuggestions.getSuggestions(prefix);
+	}
+
+	public List<Person> searchPersonByName(String name){
+		List<TreeNode<String, Person>> list = peoplePerName.search(name);
+		
+		if(list != null)
+			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
+		return null;
+	}
+	public List<Person> searchPersonBySurname(String surname){
+		List<TreeNode<String, Person>> list = peoplePerSurname.search(surname);
+		
+		if(list != null)
+			return list.stream().map(TreeNode<String, Person>::getData).collect(Collectors.toList());
+		return null;
+	}
+	public List<Person> searchPersonByCode(long code){
+		List<TreeNode<Long, Person>> list = peoplePerCode.search(code);
+		
+		if(list != null)
+			return list.stream().map(TreeNode<Long, Person>::getData).collect(Collectors.toList());
+		return null;
 	}
 	
 	//For tests
