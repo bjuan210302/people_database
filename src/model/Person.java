@@ -31,6 +31,17 @@ public class Person {
 		
 	}
 	
+	public Person(long code, String name, String surname, String gender, String birthdate, double height, String nationality) {
+		this.code = code;
+		this.name = name;
+		this.surname = surname;
+		this.gender = Gender.valueOf(gender);
+		this.birthdate = birthdate;
+		this.height = height;
+		this.nationality = nationality;
+		
+	}
+	
 	public Image getImage() throws IOException {
 		URL url = new URL(IMAGE_LINK);
 		URLConnection connection = url.openConnection();
