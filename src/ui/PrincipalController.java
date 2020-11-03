@@ -70,7 +70,7 @@ public class PrincipalController {
 	
 	public void whenInitializing() {
 		genControl = new GenerateController(this.db);
-		addControl = new AddPersonController();
+		addControl = new AddPersonController(this.db);
 		searchControl = new SearchController(this.db);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatePane.fxml"));
