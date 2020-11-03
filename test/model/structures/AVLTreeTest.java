@@ -36,13 +36,13 @@ class AVLTreeTest {
 		avl.add(1, toLeft); //This should be root's left child
 		avl.add(5, toRight); //This should be root's right child
 
-		BSTNode<Integer, String> left = avl.root.getLeft();
-		BSTNode<Integer, String> right = avl.root.getRight();
+		TreeNode<Integer, String> left = avl.root.getLeft();
+		TreeNode<Integer, String> right = avl.root.getRight();
 
 		assertTrue(left.getData().equals(toLeft));
 		assertTrue(right.getData().equals(toRight));
 
-		assertEquals(null, avl.add(1, "white")); //Should be null, as the key is already in the tree
+		assertEquals(1, avl.add(1, "white").getKey()); //Is already in the tree, but can be added again
 		
 		//add some to the right nodes to test balance
 		avl.add(4, "beige");
@@ -57,7 +57,7 @@ class AVLTreeTest {
 		setupPopulatedTree();
 		int id = 5;
 		
-		assertEquals("brown", avl.search(id).getData()); //Make sure the node exists
+		assertEquals("brown", avl.search(id).get(0).getData()); //Make sure the node exists
 		assertEquals("brown", avl.delete(id).getData()); //Delete the node, should return the removed node
 		assertEquals(null, avl.search(id)); //The node doesn't exist anymore
 		assertEquals(null, avl.delete(id)); //Can't delete it again

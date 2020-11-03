@@ -1,29 +1,31 @@
 package model.structures;
 
+import java.util.List;
+
 public class BinarySearchTree<K extends Comparable<K>, T> {
 	
-	protected BSTNode<K, T> root;
+	protected TreeNode<K, T> root;
 	
 	public BinarySearchTree() {
 		this.root = null;
 	}
 	
-	public BSTNode<K, T> getRoot(){
+	public TreeNode<K, T> getRoot(){
 		return root;
 	}
 	
-	public BSTNode<K, T> search(K key) {
+	public List<TreeNode<K, T>> search(K key) {
 		return search(key, root);
 	}
 
-	private BSTNode<K, T> search(K key, BSTNode<K, T> node){
+	private List<TreeNode<K, T>> search(K key, TreeNode<K, T> node){
 		if(node == null)
 			return null;
 		
 		int compa = key.compareTo(node.getKey()); 
 
 		if(compa == 0) {
-			return node;
+			return node.getSiblings();
 		}
 		else if(compa > 0) {
 			return search(key, node.getRight());
@@ -34,17 +36,18 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 
 	}
 
-	public BSTNode<K, T> add(K key, T data) {
-		BSTNode<K, T> node = new BSTNode<>(key, data);
-
-		return add(root, node);
-	}
-	
-	protected BSTNode<K, T> add(BSTNode<K, T> parent, BSTNode<K, T> child) {
+	public TreeNode<K, T> add(K key, T data) {
+		TreeNode<K, T> child = new TreeNode<>(key, data);
+		
 		if(root == null) {
 			root = child;
 			return child;
 		}
+
+		return add(root, child);
+	}
+	
+	protected TreeNode<K, T> add(TreeNode<K, T> parent, TreeNode<K, T> child) {
 
 		int compa = child.getKey().compareTo(parent.getKey()); 
 		if(compa > 0) {
@@ -64,26 +67,33 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 			}
 			return add(parent.getLeft(), child);
 		}
-		else {
-//			System.out.println("non accepted");
-			return null;
+		else { //Add a "duplicate"
+			parent.addSibling(child);
+			return child;
 		}
 		
 	}
 	
-	public BSTNode<K, T> delete(K key){
-		BSTNode<K, T> node = search(key);
+	public TreeNode<K, T> delete(K key){
+		List<TreeNode<K, T>> list = search(key);
+		TreeNode<K, T> node = null;
 		
-		if(node != null) {
+		if(list != null)
+			node = list.get(0);
+		
+		if(node != null && node.hasSiblings()) {
+			node.replaceWithSibling();
+		}
+		else if(node != null) {
 			delete(node);
 		}
 		
 		return node;
 	}
 	
-	private void delete(BSTNode<K, T> z){
-		BSTNode<K, T> y;
-		BSTNode<K, T> x;
+	private void delete(TreeNode<K, T> z){
+		TreeNode<K, T> y;
+		TreeNode<K, T> x;
 		if(z.getLeft() == null || z.getRight() == null) {
 			y = z;
 		}
@@ -116,7 +126,7 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		
 	}
 	
-	private BSTNode<K, T> min(BSTNode<K, T> node){
+	private TreeNode<K, T> min(TreeNode<K, T> node){
 		while(node.getLeft() != null) {
 			node = node.getLeft();
 			
@@ -124,12 +134,12 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		return node;
 	}
 	
-	private BSTNode<K, T> successor(BSTNode<K, T> x){
+	private TreeNode<K, T> successor(TreeNode<K, T> x){
 		if(x.getRight() != null) {
 			return min(x.getRight());
 			
 		}
-		BSTNode<K, T> y = x.getParent();
+		TreeNode<K, T> y = x.getParent();
 		while(y != null && x.equals(y.getRight()) ) {
 			x = y;
 			y = y.getParent();

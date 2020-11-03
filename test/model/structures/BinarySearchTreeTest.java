@@ -3,7 +3,6 @@ package model.structures;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 class BinarySearchTreeTest {
 
@@ -37,13 +36,14 @@ class BinarySearchTreeTest {
 		bst.add(1, toLeft); //This should be root's left child
 		bst.add(5, toRight); //This should be root's right child
 		
-		BSTNode<Integer, String> left = bst.root.getLeft();
-		BSTNode<Integer, String> right = bst.root.getRight();
+		TreeNode<Integer, String> left = bst.root.getLeft();
+		TreeNode<Integer, String> right = bst.root.getRight();
 		
 		assertTrue(left.getData().equals(toLeft));
 		assertTrue(right.getData().equals(toRight));
 		
-		assertEquals(null, bst.add(1, "white")); //Should be null, as the key is already in the tree
+		assertEquals(1, bst.add(1, "white").getKey()); //The same key can be added several times, it will be added as a sibling
+		assertEquals(2, bst.search(1).size()); //The same key can be added several times, it will be added as a sibling
 	}
 
 	@Test
@@ -51,12 +51,18 @@ class BinarySearchTreeTest {
 		setupPopulatedTree();
 		int id = 5;
 		
-		assertEquals("brown", bst.search(id).getData()); //Returns the node when exists
+		assertEquals("brown", bst.search(id).get(0).getData()); //Returns the node when exists
 		bst.delete(id).getData(); //Delete the node
 		assertEquals(null, bst.search(id)); //The node is no longer in the tree
 		
 		bst.add(id, "beige"); //Adding the node (key) again with different data
-		assertEquals("beige", bst.search(id).getData());
+		assertEquals("beige", bst.search(id).get(0).getData());
+		
+		//If we add the node (key) again and eliminate the first one, this should not be affected
+		bst.add(id, "gray");
+		assertEquals("beige", bst.search(id).get(0).getData());
+		bst.delete(id);
+		assertEquals("gray", bst.search(id).get(0).getData());
 	}
 	
 	@Test
@@ -64,7 +70,7 @@ class BinarySearchTreeTest {
 		setupPopulatedTree();
 		int id = 5;
 		
-		assertEquals("brown", bst.search(id).getData()); //Make sure the node exists
+		assertEquals("brown", bst.search(id).get(0).getData()); //Make sure the node exists
 		bst.delete(id); //Delete the node
 		assertEquals(null, bst.search(id)); //The node doesn't exist anymore
 		assertEquals(null, bst.delete(id)); //Can't delete it again
