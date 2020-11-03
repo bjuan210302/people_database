@@ -1,13 +1,11 @@
 package model;
 
-import java.awt.Image;
+import javafx.scene.image.Image;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
-
-import javax.imageio.ImageIO;
 
 
 public class Person {
@@ -35,11 +33,14 @@ public class Person {
 	
 	public Image getImage() throws IOException {
 		URL url = new URL(IMAGE_LINK);
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		
+		URLConnection connection = url.openConnection();
 		//The page rejects request without a standard header
 		connection.setRequestProperty("User-Agent", "NING/1.0");
-		return ImageIO.read(connection.getInputStream());
+		
+		InputStream stream = connection.getInputStream();
+		
+		//It is necessary to use 
+		return new Image(stream);
 	}
 	
 	public String getName() {
