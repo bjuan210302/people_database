@@ -44,8 +44,9 @@ public class SearchController {
 
     @FXML
     void editSurnamaAct(ActionEvent event) {
-//    	EditController edit = new EditController(this.db);
-//    	edit.editWindow();
+    	Person p = db.searchPersonBySurname(surNameField.getText()).get(0);
+    	EditController edit = new EditController(p);
+    	edit.editWindow();
     }
 
     
