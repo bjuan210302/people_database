@@ -14,13 +14,12 @@ public class Database {
 
 	public static final int MAX_PEOPLE = 1100399846; // Max number unique names generables with the given datasets
 	
-	private AVLTree<String, Person> peoplePerName; //Name
-	private AVLTree<String, Person> peoplePerSurname; //Surname
+	private AVLTree<String, Person> peoplePerName; //Compound name: Name Surname
+	private AVLTree<String, Person> peoplePerSurname; //Inverted compound name: Surname name
 	private AVLTree<Long, Person> peoplePerCode;
 	
-	private Trie nameSuggestions; //Name
-	private Trie surnameSuggestions; //Surname
-	private Trie compoundNameSuggestions; //Compound name: Name + " " + Surname
+	private Trie nameSuggestions; //Compound name: Name Surname
+	private Trie surnameSuggestions; //Inverted compound name: Surname name
 	
 	private PeopleManager peopleManager;
 	
@@ -53,13 +52,12 @@ public class Database {
 		addPerson(p);
 	}
 	public void addPerson(Person p) {
-		peoplePerName.add(p.getName().toLowerCase(), p);
-		peoplePerSurname.add(p.getSurname().toLowerCase(), p);
+		peoplePerName.add(p.getCompoundName().toLowerCase(), p);
+		peoplePerSurname.add(p.getInvertedCompoundName().toLowerCase(), p);
 		peoplePerCode.add(p.getCode(), p);
 		
-		nameSuggestions.add(p.getName().toLowerCase());
-		surnameSuggestions.add(p.getSurname().toLowerCase());
-		compoundNameSuggestions.add(p.getCompoundName().toLowerCase());
+		nameSuggestions.add(p.getCompoundName().toLowerCase());
+		surnameSuggestions.add(p.getInvertedCompoundName().toLowerCase());
 	}
 		//SEARCH
 	public List<Person> searchPersonByName(String name){

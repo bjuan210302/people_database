@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Person {
@@ -27,7 +26,7 @@ public class Person {
 		this.surname = surname;
 		this.gender = (Math.random() < 0.5) ? Gender.Male : Gender.Female;
 		this.birthdate = LocalDate.now().minusYears((long)age).minusDays(1).toString();
-		this.height = ThreadLocalRandom.current().nextDouble(1.3, 2); //generates a num in range [1.3, 2)
+		this.height = Math.random() * (2 - 1.2 + 1) + 1.2; //generates a num between 1,4 and 2
 		this.nationality = nationality;
 		
 	}
