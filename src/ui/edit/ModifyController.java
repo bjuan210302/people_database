@@ -17,11 +17,15 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Person;
 import ui.notifications.Notification;
 
 public class ModifyController {
-	public ModifyController() {
-		// TODO Auto-generated constructor stub
+	
+	private Person p;
+	
+	public ModifyController(Person p) {
+		this.p = p;
 	}
 	
 	@FXML
@@ -101,6 +105,18 @@ public class ModifyController {
     	modifyWindow.setScene(scene);
     	modifyWindow.setResizable(false);
     	modifyWindow.initModality(Modality.APPLICATION_MODAL);
+    	
+    	nameField.setText(p.getName());
+    	surnameField.setText(p.getSurname());
+    	String gender = p.getGender().toString();
+    	if(gender.equalsIgnoreCase("male")) {
+    		Genre.selectToggle(mascRbut);
+    	}else {
+    		Genre.selectToggle(femRBut);
+    	}
+    	birthDatePick.setValue(LocalDate.parse(p.getBirthdate()));
+    	heightField.setText(p.getHeight()+ "");
+    	nationField.setText(p.getNationality());
     	
     	modifyWindow.show();
     }

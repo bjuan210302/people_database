@@ -35,6 +35,9 @@ public class EditController {
 
     @FXML
     private ImageView imgView;
+    
+    @FXML
+    private Label codeLbl;
 
     @FXML
     private Label nameLbl;
@@ -67,7 +70,7 @@ public class EditController {
 
     @FXML
     void editAct(ActionEvent event) {
-    	ModifyController modify = new ModifyController();
+    	ModifyController modify = new ModifyController(this.person);
     	modify.modifyWindow();
 
     }
@@ -97,6 +100,7 @@ public class EditController {
     	editWindow.setResizable(false);
     	editWindow.initModality(Modality.APPLICATION_MODAL);
     	
+    	codeLbl.setText(person.getCode()+ "");
     	nameLbl.setText(person.getName());
     	surnameLbl.setText(person.getSurname());
     	genreLbl.setText(person.getGender().toString());

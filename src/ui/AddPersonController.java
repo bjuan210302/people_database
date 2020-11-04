@@ -11,9 +11,17 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
+import model.Database;
 import ui.notifications.Notification;
 
 public class AddPersonController {
+	
+	private Database db;
+	
+	public AddPersonController(Database db) {
+		this.db = db;
+	}
+	
 	@FXML
     private JFXTextField nameField;
 
@@ -55,6 +63,7 @@ public class AddPersonController {
     		LocalDate birthDate = birthDatePick.getValue();
     		double height = Double.parseDouble(heightField.getText());
     		String nationality = nationField.getText();
+    		db.addPerson(name, surname, genre, birthDate.toString(), height, nationality);
     	}
     	catch(NumberFormatException e) {
     		new Notification("Error!", "Please write the height in the correct format", Notification.ERROR).show();
