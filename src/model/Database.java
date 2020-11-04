@@ -30,6 +30,7 @@ public class Database {
 		peoplePerCode = new AVLTree<Long, Person>();
 		nameSuggestions = new Trie();
 		surnameSuggestions = new Trie();
+		compoundNameSuggestions = new Trie();
 		peopleManager = new PeopleManager();
 	}
 	
