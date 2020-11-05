@@ -32,7 +32,7 @@ public class GeneratePeopleThread  {
 		new Thread(() -> {
 			db.mergeTempList(observableDouble);
 			Platform.runLater(() -> {
-				ui.updateCounters(0);
+				ui.updateCountersFinish();
 			});
 		}).start();
 		
@@ -43,12 +43,9 @@ public class GeneratePeopleThread  {
 		new Thread(() -> {
 			db.generateTempList(observableDouble);
 			Platform.runLater(() -> {
-				ui.updateCounters(0);
+				ui.updateCountersFinish();
 			});
 		}).start();
-	}
-	public void run() {
-		
 	}
 	
 	public static DoublePropertyBase intAsObservable(int i) {
