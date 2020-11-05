@@ -43,7 +43,7 @@ public class PeopleManager {
 	}
 
 	public boolean mergeTempList(Database db, DoublePropertyBase amount) {
-		if (tempList == null)
+		if (tempList == null || amount.get() > tempList.size())
 			return false;
 		
 		trackeableCycle(amount, new Consumer<Integer>() {
@@ -74,7 +74,7 @@ public class PeopleManager {
 	public void trackeableCycle(DoublePropertyBase times, Consumer<Integer> function) {
 		double totalIterations = times.get();
 		
-		double onePercentOfIterations = totalIterations*0.005;
+		double onePercentOfIterations = totalIterations*0.01;
 		int iterations = 0;
 		double percentDone = 0;
 		BooleanPropertyBase notify = getBolPropertyBase();
