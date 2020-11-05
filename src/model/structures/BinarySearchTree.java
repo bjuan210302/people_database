@@ -74,6 +74,38 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 		
 	}
 	
+	public TreeNode<K, T> delete(K key, T value){
+		List<TreeNode<K, T>> list = search(key);
+		TreeNode<K, T> node = null;
+		
+		if(list != null) {
+			int i = 0;
+			for(i = 0; i < list.size(); i++) {
+				TreeNode<K, T> aux = list.get(i);
+				if(aux.getData().equals(value)) {
+					node = aux;
+					break;
+				}
+			}
+			
+			if(i != 0) {
+				list.get(0).deleteSibling(i);
+				return list.get(0);
+			}
+			else
+				node = list.get(0);
+		}
+		
+		if(node != null && node.hasSiblings()) {
+			node.replaceWithSibling();
+		}
+		else if(node != null) {
+			delete(node);
+		}
+		
+		return node;
+	}
+	
 	public TreeNode<K, T> delete(K key){
 		List<TreeNode<K, T>> list = search(key);
 		TreeNode<K, T> node = null;

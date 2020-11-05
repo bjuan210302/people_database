@@ -29,7 +29,6 @@ public class Database {
 		peoplePerCode = new AVLTree<Long, Person>();
 		nameSuggestions = new Trie();
 		surnameSuggestions = new Trie();
-		compoundNameSuggestions = new Trie();
 		peopleManager = new PeopleManager();
 	}
 	
@@ -45,7 +44,6 @@ public class Database {
 	}
 	
 	//ADD, DELETE, AND SEARCH PEOPLE.
-	
 		//ADD
 	public void addPerson(String name, String surname, String gender, String birthdate, double height, String nationality) {
 		Person p = new Person(peopleManager.generateRandomId(), name, surname, gender, birthdate, height, nationality);
@@ -77,6 +75,37 @@ public class Database {
 		if(list != null)
 			return list.stream().map(TreeNode<Long, Person>::getData).collect(Collectors.toList());
 		return null;
+	}
+		//DELETE
+	public void deletePerson(Person p) {
+		peoplePerName.delete(p.getCompoundName().toLowerCase(), p);
+		peoplePerSurname.delete(p.getInvertedCompoundName().toLowerCase(), p);
+		peoplePerCode.delete(p.getCode(), p);
+		
+		nameSuggestions.remove(p.getCompoundName().toLowerCase());
+		surnameSuggestions.remove(p.getInvertedCompoundName().toLowerCase());
+	}
+	
+	//MODIFY AND REPLACE
+		//MODIFY (NO KEYS)
+	public void modidyPerson(Person p, String gender, String birthdate, double height, String nationality) {
+		p.modifyAll(gender, birthdate, height, nationality);
+	}
+		//MODIFY REPLACE (modifying keys)
+	public void modidyPerson(Person p, String name, String surname, String gender, String birthdate, double height, String nationality) {
+		Person replacement = new Person(p.getCode(), name, surname, gender, birthdate, height, nationality);
+		replacePerson(p, replacement);
+	}
+	private void replacePerson(Person old, Person replacement) {
+		peoplePerName.delete(old.getCompoundName().toLowerCase(), old);
+		peoplePerSurname.delete(old.getInvertedCompoundName().toLowerCase(), old);
+		nameSuggestions.remove(old.getCompoundName().toLowerCase());
+		surnameSuggestions.remove(old.getInvertedCompoundName().toLowerCase());
+		
+		peoplePerName.add(replacement.getCompoundName().toLowerCase(), replacement);
+		peoplePerSurname.add(replacement.getInvertedCompoundName().toLowerCase(), replacement);
+		nameSuggestions.add(replacement.getCompoundName().toLowerCase());
+		surnameSuggestions.add(replacement.getInvertedCompoundName().toLowerCase());
 	}
 	
 	//TEXT SUGGESTIONS

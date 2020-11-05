@@ -73,7 +73,33 @@ class BinarySearchTreeTest {
 		assertEquals("brown", bst.search(id).get(0).getData()); //Make sure the node exists
 		bst.delete(id); //Delete the node
 		assertEquals(null, bst.search(id)); //The node doesn't exist anymore
-		assertEquals(null, bst.delete(id)); //Can't delete it again
+		assertEquals(null, bst.delete(id)); //Can't delete it again, because it had no siblings
+		
+		//Test delete when the node has siblings
+		id = 1;
+		bst.add(id, "purple"); //Adding key 1 again
+		assertNotEquals(null, bst.search(id)); //Make sure the node exists
+		bst.delete(id); //Should first delete the node with value "blue"
+		assertEquals("purple", bst.search(id).get(0).getData()); //"purple" node should still exist
+		assertEquals(1, bst.search(id).size()); //Now the key only holds one value
+
+		bst.delete(id); //Delete that key again, this one it deletes the node with value "purple"
+		assertEquals(null, bst.search(id)); //The node doesn't exist anymore
+	}
+	
+	@Test
+	void deleteWithValueTest() {
+		setupPopulatedTree();
+		int id = 1;
+		
+		assertEquals("blue", bst.search(id).get(0).getData()); //Make sure the node exists
+		bst.add(id, "purple"); //Add another node with the same key, different value
+		
+		//If we use now delete(id) it would delete the first node with that key (brown)
+		//Instead, we can use delete(key, value) to delete the node with a know value
+		bst.delete(id, "purple"); //Should delete the node with value "purple"
+		assertEquals(1, bst.search(id).size()); //Now the key only holds one value
+		assertEquals("blue", bst.search(id).get(0).getData()); //That value is "brown"
 	}
 	
 	@Test
@@ -83,5 +109,15 @@ class BinarySearchTreeTest {
 		
 		setupPopulatedTree(); //Populated with 7 nodes
 		assertEquals(7, bst.count());
+		
+		//Add another 7 nodes with same keys just to test
+		bst.add(5, "brown");
+		bst.add(1, "blue");
+		bst.add(2, "black");
+		bst.add(3, "red");
+		bst.add(4, "beige");
+		bst.add(6, "pink");
+		bst.add(7, "white");
+		assertEquals(14, bst.count());
 	}
 }

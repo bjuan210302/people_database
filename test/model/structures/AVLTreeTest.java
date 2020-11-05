@@ -69,4 +69,20 @@ class AVLTreeTest {
 		assertTrue(Math.abs(avl.getRoot().getBalanceFactor()) < 2);
 	}
 	
+	@Test
+	void deleteWithValueTest() {
+		setupPopulatedTree();
+		int id = 1;
+		
+		assertEquals("blue", avl.search(id).get(0).getData()); //Make sure the node exists
+		avl.add(id, "purple"); //Add another node with the same key, different value
+		
+		//If we use now delete(id) it would delete the first node with that key (brown)
+		//Instead, we can use delete(key, value) to delete the node with a know value
+		avl.delete(id, "purple"); //Should delete the node with value "purple"
+		assertEquals(1, avl.search(id).size()); //Now the key only holds one value
+		assertEquals("blue", avl.search(id).get(0).getData()); //That value is "brown"
+		
+		assertTrue(Math.abs(avl.getRoot().getBalanceFactor()) < 2);
+	}
 }

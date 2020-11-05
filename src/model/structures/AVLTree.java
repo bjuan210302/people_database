@@ -18,6 +18,14 @@ public class AVLTree<K extends Comparable<K>, T> extends BinarySearchTree<K, T>{
 		return ref;
 	}
 	
+	@Override
+	public TreeNode<K, T> delete(K key, T value) {
+		TreeNode<K, T> ref = super.delete(key, value);
+		if(ref != null)
+			balance(ref.getParent());
+		return ref;
+	}
+	
 	//Doesn't admit node = null
 	private void balance(TreeNode<K, T> parent) {
 

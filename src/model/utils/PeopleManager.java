@@ -2,9 +2,7 @@ package model.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -14,7 +12,6 @@ import java.nio.file.*;
 
 import model.Database;
 import model.Person;
-import threads.GeneratePeopleThread;
 
 public class PeopleManager {
 	

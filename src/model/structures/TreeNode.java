@@ -1,10 +1,6 @@
 package model.structures;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 public class TreeNode<K extends Comparable<K>,T> {
 	
 	private K key;
@@ -75,8 +71,12 @@ public class TreeNode<K extends Comparable<K>,T> {
 		TreeNode<K, T> replacement = siblings.get(1);
 		this.data = replacement.data;
 		siblings.remove(0);
-		siblings.add(0, replacement);
+		replacement.siblings = siblings;
 	}
+	public void deleteSibling(int i) {
+		siblings.remove(i);
+	}
+	
 	
 	public int getBalanceFactor() {
 		int bfRight = (right == null) ? 0 : right.getHeight();
@@ -91,7 +91,7 @@ public class TreeNode<K extends Comparable<K>,T> {
 	}
 
 	public int count() {
-		int sum = 1;
+		int sum = siblings.size();
 		
 		if(left != null)
 			sum += left.count();
@@ -101,6 +101,4 @@ public class TreeNode<K extends Comparable<K>,T> {
 		
 		return sum;
 	}
-	
-
 }
