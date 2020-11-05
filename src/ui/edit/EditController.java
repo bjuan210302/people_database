@@ -15,15 +15,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Database;
 import model.Person;
+import ui.notifications.Notification;
 
 public class EditController {
 	
 	private Person person;
+	private Database db;
 	
 	
-	
-	public EditController(Person person) {
+	public EditController(Database db, Person person) {
+		this.db = db;
 		this.person = person;
 	}
 	
@@ -65,13 +68,17 @@ public class EditController {
 
     @FXML
     void delAct(ActionEvent event) {
+    	db.deletePerson(person);
+    	editWindow.close();
+    	new Notification("Succesfull", "Person deleted successfully", Notification.SUCCESS).show();
 
     }
 
     @FXML
     void editAct(ActionEvent event) {
-    	ModifyController modify = new ModifyController(this.person);
+    	ModifyController modify = new ModifyController(this.db, this.person);
     	modify.modifyWindow();
+    	editWindow.close();
 
     }
 

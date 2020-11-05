@@ -17,14 +17,17 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Database;
 import model.Person;
 import ui.notifications.Notification;
 
 public class ModifyController {
 	
 	private Person p;
+	private Database db;
 	
-	public ModifyController(Person p) {
+	public ModifyController(Database db, Person p) {
+		this.db = db;
 		this.p = p;
 	}
 	
@@ -83,6 +86,15 @@ public class ModifyController {
     		LocalDate birthDate = birthDatePick.getValue();
     		double height = Double.parseDouble(heightField.getText());
     		String nationality = nationField.getText();
+    		if(!name.equalsIgnoreCase(p.getName()) || !surname.equalsIgnoreCase(p.getSurname())) {
+    			db.modidyPerson(p, name, surname, genre, birthDate.toString(), height, nationality);
+    			new Notification("Success", "Person modified successfully", Notification.SUCCESS).show();
+    		}
+    		else {
+    			db.modidyPerson(p, genre, birthDate.toString(), height, nationality);
+    			new Notification("Success", "Person modified successfully", Notification.SUCCESS).show();
+    		}
+    		modifyWindow.close();
     	}
     	catch(NumberFormatException e) {
     		new Notification("Error!", "Please write the height in the correct format", Notification.ERROR).show();

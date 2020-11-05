@@ -64,6 +64,12 @@ public class AddPersonController {
     		double height = Double.parseDouble(heightField.getText());
     		String nationality = nationField.getText();
     		db.addPerson(name, surname, genre, birthDate.toString(), height, nationality);
+    		nameField.setText("");
+    		surnameField.setText("");
+    		Genre.selectToggle(null);
+    		birthDatePick.setValue(null);
+    		heightField.setText("");
+    		nationField.setText("");
     	}
     	catch(NumberFormatException e) {
     		new Notification("Error!", "Please write the height in the correct format", Notification.ERROR).show();

@@ -38,14 +38,16 @@ public class SearchController {
     @FXML
     void editNameAct(ActionEvent event) {
     	Person p = db.searchPersonByName(searchField.getText()).get(0);
-    	EditController edit = new EditController(p);
+    	EditController edit = new EditController(this.db, p);
+    	searchField.setText("");
     	edit.editWindow();
     }
 
     @FXML
     void editSurnamaAct(ActionEvent event) {
     	Person p = db.searchPersonBySurname(surNameField.getText()).get(0);
-    	EditController edit = new EditController(p);
+    	EditController edit = new EditController(this.db, p);
+    	surNameField.setText("");
     	edit.editWindow();
     }
 
@@ -62,8 +64,6 @@ public class SearchController {
     	
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
         JFXAutoCompletePopup<String> autoCompleteSurname = new JFXAutoCompletePopup<>();
-//        autoCompletePopup.getSuggestions().addAll(db.getNameSuggestions(event.getObject()));
-//    	autoCompletePopup.filter(string -> string.toLowerCase().contains(searchField.getText().toLowerCase()));
 
         autoCompletePopup.setSelectionHandler(event -> {
             searchField.setText(event.getObject());

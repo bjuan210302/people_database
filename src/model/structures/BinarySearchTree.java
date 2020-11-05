@@ -87,12 +87,12 @@ public class BinarySearchTree<K extends Comparable<K>, T> {
 					break;
 				}
 			}
-			
-			if(i != 0) {
+			i--;
+			if(i > 0) {
 				list.get(0).deleteSibling(i);
 				return list.get(0);
 			}
-			else
+			else if(i==0)
 				node = list.get(0);
 		}
 		
