@@ -25,7 +25,7 @@ public class GenerateController {
 	}
 	
 	public void initialize() {
-		BooleanBinding numOfDataIsEmpty = numOfData.textProperty().isEmpty();
+		BooleanBinding numOfDataIsEmpty = numOfData.textProperty().isEmpty().or(numOfData.disabledProperty());
 		generateButton.disableProperty().bind(numOfDataIsEmpty);
 		mergeButton.disableProperty().bind(numOfDataIsEmpty);
 	}
@@ -75,13 +75,13 @@ public class GenerateController {
     }
     private void disableAllFields() {
     	numOfData.setDisable(true);
-    	generateButton.setDisable(true);
-    	mergeButton.setDisable(true);
+//    	generateButton.setDisable(true);
+//    	mergeButton.setDisable(true);
     }
     private void enableAllFields() {
     	numOfData.setDisable(false);
-    	generateButton.setDisable(false);
-    	mergeButton.setDisable(false);
-    	percentLabel.setText("");
+//    	generateButton.setDisable(false);
+//    	mergeButton.setDisable(false);
+//    	percentLabel.setText("");
     }
 }
