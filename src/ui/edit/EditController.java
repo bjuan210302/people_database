@@ -1,10 +1,12 @@
 package ui.edit;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,13 +23,18 @@ import ui.notifications.Notification;
 
 public class EditController {
 	
+	private List<Person> listOfPersons;
 	private Person person;
 	private Database db;
+	private int idx;
+	private int size;
 	
 	
-	public EditController(Database db, Person person) {
+	public EditController(Database db, List<Person> persons) {
 		this.db = db;
-		this.person = person;
+		this.listOfPersons = persons;
+		idx = 0;
+		size = persons.size();
 	}
 	
 	@FXML
@@ -65,6 +72,17 @@ public class EditController {
 
     @FXML
     private JFXButton delBut;
+    
+    @FXML
+    private JFXButton nextBut;
+
+    @FXML
+    void nextAct(ActionEvent event) {
+    	idx++;
+    	person = listOfPersons.get(idx);
+    	actualizeWindow();
+
+    }
 
     @FXML
     void delAct(ActionEvent event) {
@@ -87,6 +105,46 @@ public class EditController {
     	editWindow.close();
 
     }
+    
+    public void actualizeWindow() {
+    	codeLbl.setText(person.getCode()+ "");
+    	nameLbl.setText(person.getName());
+    	surnameLbl.setText(person.getSurname());
+    	genreLbl.setText(person.getGender().toString());
+    	birthLbl.setText(person.getBirthdate());
+    	heightLbl.setText(person.getHeight()+ "");
+    	nationLbl.setText(person.getNationality());
+    	
+    	if(idx>=size-1) {
+    		nextBut.setDisable(true);
+    	}
+    	else {
+    		nextBut.setDisable(false);
+    	}
+    	
+    	
+    	new Thread(new Runnable() {
+
+    		@Override
+    		public void run() {
+    			Platform.runLater(new Runnable() {
+
+    				@Override
+    				public void run() {
+    					try {
+    						Image img = person.getImage();
+    						imgView.setImage(img);
+    					} catch (IOException e) {
+    						// TODO Auto-generated catch block
+    						e.printStackTrace();
+    					}
+
+    				}
+    			});
+
+    		}
+    	}).start();
+    }
 
     
     public void editWindow() {
@@ -101,7 +159,7 @@ public class EditController {
     	Scene scene = new Scene(editPane);
     	
     	
-    	
+    	person = listOfPersons.get(idx);
     	editWindow = new Stage();
     	editWindow.setScene(scene);
     	editWindow.setResizable(false);
@@ -115,9 +173,14 @@ public class EditController {
     	heightLbl.setText(person.getHeight()+ "");
     	nationLbl.setText(person.getNationality());
     	
+    	if(idx>=size-1) {
+    		nextBut.setDisable(true);
+    	}
+    	
     
     	
     	editWindow.show();
+    	
     	new Thread(new Runnable() {
 			
 			@Override
@@ -140,6 +203,8 @@ public class EditController {
 			}
 		}).start();
     }
+    
+    
     
     
 

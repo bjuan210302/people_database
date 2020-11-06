@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.List;
+
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -38,15 +40,37 @@ public class SearchController {
     @FXML
     private Label numOfSurnameSugg;
 
-    
+    @FXML
+    private JFXTextField searchCodeField;
 
     @FXML
     private JFXButton editSurnameBut;
+    
+    @FXML
+    private JFXButton editCodeBut;
+
+    @FXML
+    void editCodeAct(ActionEvent event) {
+    	try {
+    		List<Person> p = db.searchPersonByCode(Long.parseLong(searchCodeField.getText()));
+        	EditController edit = new EditController(this.db, p);
+        	searchCodeField.setText("");
+        	edit.editWindow();
+    		
+    	}
+    	catch(NullPointerException e) {
+    		new Notification("Error!", "This user doesn't exists", Notification.ERROR).show();
+    	}
+    	catch (NumberFormatException e) {
+    		new Notification("Error: Wrong format", "The code is numerical", Notification.ERROR).show();
+		}
+
+    }
 
     @FXML
     void editNameAct(ActionEvent event) {
     	try {
-    		Person p = db.searchPersonByName(searchField.getText()).get(0);
+    		List<Person> p = db.searchPersonByName(searchField.getText());
         	EditController edit = new EditController(this.db, p);
         	searchField.setText("");
         	edit.editWindow();
@@ -61,7 +85,7 @@ public class SearchController {
     @FXML
     void editSurnamaAct(ActionEvent event) {
     	try {
-    		Person p = db.searchPersonBySurname(surNameField.getText()).get(0);
+    		List<Person> p = db.searchPersonBySurname(surNameField.getText());
         	EditController edit = new EditController(this.db, p);
         	surNameField.setText("");
         	edit.editWindow();
@@ -80,9 +104,11 @@ public class SearchController {
     	
     	BooleanBinding editNameBool = searchField.textProperty().isEmpty();
     	BooleanBinding editSurnameBool = surNameField.textProperty().isEmpty();
+    	BooleanBinding editCodeBool = searchCodeField.textProperty().isEmpty();
     	
     	editNameButton.disableProperty().bind(editNameBool);
     	editSurnameBut.disableProperty().bind(editSurnameBool);
+    	editCodeBut.disableProperty().bind(editCodeBool);
     	
         JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
         JFXAutoCompletePopup<String> autoCompleteSurname = new JFXAutoCompletePopup<>();
