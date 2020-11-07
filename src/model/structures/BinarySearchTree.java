@@ -2,7 +2,7 @@ package model.structures;
 
 import java.util.List;
 
-public class BinarySearchTree<K extends Comparable<K>, T> {
+public class BinarySearchTree<K extends Comparable<K>, T> implements BSTInterface<K, T>{
 	
 	protected TreeNode<K, T> root;
 	
