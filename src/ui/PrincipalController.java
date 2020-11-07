@@ -84,6 +84,8 @@ public class PrincipalController {
 			
 		}
 		
+		paneChange.getChildren().add(firstPane);
+		
 		fxmlLoader = new FXMLLoader(getClass().getResource("addPersonPane.fxml"));
 		fxmlLoader.setController(addControl);
 		
