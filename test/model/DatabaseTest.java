@@ -3,14 +3,10 @@ package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.beans.property.DoublePropertyBase;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ObservableValue;
-import threads.GeneratePeopleThread;
 
 class DatabaseTest {
 
@@ -40,18 +36,29 @@ class DatabaseTest {
 	@Test
 	void testGenerateAndMerge() {
 		setupEmpty();
-		DoublePropertyBase amount = GeneratePeopleThread.intAsObservable(200);
+		DoublePropertyBase amount = new DoublePropertyBase() {
+			@Override
+			public String getName() {
+				return "thisDoesNotMatter";
+			}
+			
+			@Override
+			public Object getBean() {
+				return null;
+			}
+		};
+		amount.set(200);
 		
 		db.generateTempList(amount);
 		
 		assertTrue(db.mergeTempList(amount));
 		//Testing trees
-		assertEquals(amount, db.getPeoplePerName().count());
-		assertEquals(amount, db.getPeoplePerSurname().count());
-		assertEquals(amount, db.getPeoplePerCode().count());
+		assertEquals(amount.get(), db.getPeoplePerName().count());
+		assertEquals(amount.get(), db.getPeoplePerSurname().count());
+		assertEquals(amount.get(), db.getPeoplePerCode().count());
 		//Testing available suggestions
-		assertEquals(amount, db.getNameSuggestions().countTotalSuggestions());
-		assertEquals(amount, db.getSurnameSuggestions().countTotalSuggestions());
+		assertEquals(amount.get(), db.getNameSuggestions().countTotalSuggestions());
+		assertEquals(amount.get(), db.getSurnameSuggestions().countTotalSuggestions());
 	}
 	
 	@Test
@@ -75,22 +82,18 @@ class DatabaseTest {
 		setupOnePerson();
 		
 		String compound = name + " " + surname;
-		String inverseCompound = surname + " " + name;
 		
 		assertEquals(1, db.searchPersonByCode(1).size());
-		assertEquals(compound, db.getNameSuggestions(name).get(0)); 
-		assertEquals(inverseCompound, db.getSurnameSuggestions(surname).get(0));
+		assertEquals(compound.toLowerCase(), db.getNameSuggestions(name).get(0));
 		
 		assertEquals(name, db.searchPersonByCode(1).get(0).getName()); 
 		assertEquals(surname, db.searchPersonByCode(1).get(0).getSurname());
 		
 		db.deletePerson(p); // Is not in the database anymore
 		
-		assertEquals(0, db.searchPersonByCode(1).size());
 		assertEquals(null, db.getNameSuggestions(name)); 
 		assertEquals(null, db.getSurnameSuggestions(surname));
 		
-		assertEquals(null, db.searchPersonByCode(1)); 
 		assertEquals(null, db.searchPersonByCode(1));
 		
 	}
