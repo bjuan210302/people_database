@@ -95,5 +95,6 @@
             <Font name="System Italic" size="20.0" />
          </font>
       </Label>
+      <JFXButton fx:id="nextBut" layoutX="777.0" layoutY="24.0" onAction="#nextAct" style="-fx-background-color: #d5dce8;" text="Next" />
    </children>
 </Pane>
